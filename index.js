@@ -42,7 +42,7 @@ async function kekaAttendance(status) {
             console.log("Login with email and password");
             await dummyWait(5000);
             await page.click(loginWithKekaSelector);
-
+            await dummyWait(5000);
         } catch (reason) {
             console.log(reason);
         }
@@ -57,12 +57,14 @@ async function kekaAttendance(status) {
         await page.type(emailSelector, credential.email);
         await page.type(passwordSelector, credential.password);
         await dummyWait(5000);
+        console.log("Clicking on sign in button");
         await page.click(loginButtonSelector);
 
         const clockInButtonSelector = 'body > xhr-app-root > div > xhr-home > div > home-dashboard > div > div > div > div > div:nth-child(2) > div > div:nth-child(1) > div:nth-child(6) > home-attendance-clockin-widget > div > div.card-body.clear-padding.d-flex.flex-column.justify-content-between > div > div.h-100.d-flex.align-items-center > div > div.d-flex.align-items-center > div:nth-child(1) > button';
         const clockOutButtonSelector = 'body > xhr-app-root > div > xhr-home > div > home-dashboard > div > div > div > div > div:nth-child(2) > div > div:nth-child(1) > div:nth-child(6) > home-attendance-clockin-widget > div > div.card-body.clear-padding.d-flex.flex-column.justify-content-between > div > div.h-100.d-flex.align-items-center > div > div.d-flex.align-items-center > div > div > button';
         const clockOutConfirmationSelector = 'body > xhr-app-root > div > xhr-home > div > home-dashboard > div > div > div > div > div:nth-child(2) > div > div:nth-child(1) > div:nth-child(6) > home-attendance-clockin-widget > div > div.card-body.clear-padding.d-flex.flex-column.justify-content-between > div > div.h-100.d-flex.align-items-center > div > div.d-flex.align-items-center > div > div:nth-child(1) > button.btn.btn-danger.btn-x-sm.mr-10';
-        await dummyWait(10000);
+        await dummyWait(20000);
+        console.log("Setting Location");
         await page.setGeolocation({ latitude: 75.518204, longitude: 32.390320 });
         if ((await page.$(clockOutButtonSelector)) !== null) {
             console.log("You are already clocked-in.");
@@ -81,7 +83,7 @@ async function kekaAttendance(status) {
                 result = true;
             }
         } else {
-
+            console.log("I am here");
             if ((await page.$(clockInButtonSelector).catch(() => null)) !== null) {
                 console.log("You are not clocked-in.");
                 if (status) {

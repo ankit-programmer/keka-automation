@@ -10,13 +10,13 @@ app.get('/', (req, res) => {
 })
 
 app.get('/clock-in', async (req, res) => {
-    console.log("Clock-in")
+    console.log("Action : Clock-in")
     const status = await kekaAttendance(CLOCK_IN);
     res.send(status);
 });
 
 app.get('/clock-out', async (req, res) => {
-    console.log("Clock-out")
+    console.log("Action : Clock-out")
     const status = await kekaAttendance(CLOCK_OUT);
     res.send(status);
 });
@@ -83,9 +83,8 @@ async function kekaAttendance(status) {
                 result = true;
             }
         } else {
-            console.log("I am here");
+            console.log("You are not clocked-in.");
             if ((await page.$(clockInButtonSelector).catch(() => null)) !== null) {
-                console.log("You are not clocked-in.");
                 if (status) {
                     console.log("Clocking you in!");
                     await page.click(clockInButtonSelector).catch((reason) => {

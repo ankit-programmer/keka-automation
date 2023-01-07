@@ -12,13 +12,13 @@ app.get('/', (req, res) => {
 app.get('/clock-in', async (req, res) => {
     console.log("Action : Clock-in")
     const status = await kekaAttendance(CLOCK_IN);
-    res.send(status);
+    res.status(status ? 200 : 500).send(status);
 });
 
 app.get('/clock-out', async (req, res) => {
     console.log("Action : Clock-out")
     const status = await kekaAttendance(CLOCK_OUT);
-    res.send(status);
+    res.status(status ? 200 : 500).send(status);
 });
 
 

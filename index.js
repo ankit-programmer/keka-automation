@@ -30,7 +30,7 @@ app.listen(port, () =>
 async function kekaAttendance(status) {
     let result = false;
     try {
-        const browser = await puppeteer.launch({ headless: true });
+        const browser = await puppeteer.launch({ headless: true, args: ['--no-sandbox'] });
         const context = browser.defaultBrowserContext();
         await context.overridePermissions('https://walkover.keka.com/', ['geolocation']);
         const page = await browser.newPage();

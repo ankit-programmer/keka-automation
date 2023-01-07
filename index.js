@@ -5,13 +5,17 @@ const express = require("express");
 const app = express();
 const CLOCK_IN = true;
 const CLOCK_OUT = false;
-app.use('/clock-in', async (req, res) => {
+app.get('/', (req, res) => {
+    res.send(Date.now().toString());
+})
+
+app.get('/clock-in', async (req, res) => {
     console.log("Clock-in")
     const status = await kekaAttendance(CLOCK_IN);
     res.send(status);
 });
 
-app.use('/clock-out', async (req, res) => {
+app.get('/clock-out', async (req, res) => {
     console.log("Clock-out")
     const status = await kekaAttendance(CLOCK_OUT);
     res.send(status);

@@ -30,13 +30,14 @@ app.listen(port, () =>
 async function kekaAttendance(status) {
     let result = false;
     try {
-        const browser = await puppeteer.launch({ headless: true, args: ['--no-sandbox'] });
+        const browser = await puppeteer.launch({ headless: false, args: ['--no-sandbox'] });
         const context = browser.defaultBrowserContext();
         await context.overridePermissions('https://walkover.keka.com/', ['geolocation']);
         const page = await browser.newPage();
 
         await page.goto('https://walkover.keka.com/');
-        const loginWithKekaSelector = `#login-container-center > div > div > div.form-group > form > button.btn.btn-danger.btn-login.btn-keka-login`
+        // const loginWithKekaSelector = `#login-container-center > div > div > div.form-group > form > button.btn.btn-danger.btn-login.btn-keka-login`
+        const loginWithKekaSelector = `body > div > div.login-content.d-flex.flex-column.justify-content-between.overflow-auto > div:nth-child(1) > div:nth-child(2) > div > div:nth-child(2) > button`
         try {
             await page.waitForSelector(loginWithKekaSelector);
             console.log("Login with email and password");
@@ -47,12 +48,13 @@ async function kekaAttendance(status) {
             console.log(reason);
         }
         const credential = {
-            email: process.env.email,
-            password: process.env.password
+            email: process.env.email || "ankitkumar@whozzat.com",
+            password: process.env.password || "Keka&ankit@2023"
         }
         const emailSelector = '#email';
         const passwordSelector = `#password`;
-        const loginButtonSelector = '#login-container-center > div > div > form > div > div.form-group > div > button';
+        // const loginButtonSelector = '#login-container-center > div > div > form > div > div.form-group > div > button';
+        const loginButtonSelector = 'body > div > div.login-content.d-flex.flex-column.justify-content-between.overflow-auto > div:nth-child(1) > div:nth-child(2) > form > div > button';
         await page.waitForSelector(emailSelector);
         await page.type(emailSelector, credential.email);
         await page.type(passwordSelector, credential.password);

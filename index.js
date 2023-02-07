@@ -30,7 +30,7 @@ app.listen(port, () =>
 async function kekaAttendance(status) {
     let result = false;
     try {
-        const browser = await puppeteer.launch({ headless: false, args: ['--no-sandbox'] });
+        const browser = await puppeteer.launch({ headless: true, args: ['--no-sandbox'] });
         const context = browser.defaultBrowserContext();
         await context.overridePermissions('https://walkover.keka.com/', ['geolocation']);
         const page = await browser.newPage();
@@ -48,8 +48,8 @@ async function kekaAttendance(status) {
             console.log(reason);
         }
         const credential = {
-            email: process.env.email || "ankitkumar@whozzat.com",
-            password: process.env.password || "Keka&ankit@2023"
+            email: process.env.email ,
+            password: process.env.password
         }
         const emailSelector = '#email';
         const passwordSelector = `#password`;
